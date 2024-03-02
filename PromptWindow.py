@@ -1,8 +1,10 @@
-from PySide6.QtWidgets import QMainWindow, QApplication, QLabel, QComboBox
+from PySide6.QtWidgets import QMainWindow, QApplication, QLabel, QComboBox, QSpinBox, QPushButton
 from PySide6.QtGui import QPixmap, QFont
+from VideoPlayer import VideoPlayer
+import data
 #from PySide6.QtMultimedia import QMediaPlayer
 #from PySide6.QtMultimediaWidgets import QVideoWidget
-#from PySide6.QtCore import Qt, QUrl
+#from PySide6.QtCore import Qt
 
 class PromptWindow(QMainWindow):
     """
@@ -10,6 +12,7 @@ class PromptWindow(QMainWindow):
     The code is generated as a class, but functions as sequenced code due to __init__.
     """
     def __init__(self):
+        self.font = "Helevetica"
         super().__init__() # needed for QMainWindow properties
         self.initWindow() # initalizes window
         self.initUI() # initalizes ui
@@ -36,80 +39,51 @@ class PromptWindow(QMainWindow):
     
     def combo_box(self, text, items, x, y):
         label = QLabel(text, self)
-        label.setFont(QFont("Helvetica", 12.5))
+        label.setFont(QFont(self.font, 12.5))
         label.adjustSize()
         label.move(x, y)
         options = QComboBox(self)
-        options.setFont(QFont("Helvetica", 12.5))
+        options.setFont(QFont(self.font, 12.5))
         options.addItems(items)
         options.adjustSize()
-        options.move(x + label.width() + 10, y - 3)
+        options.move(x + label.width() + 10, y)
         return options
 
-    
+    def spin_box(self, text, small, big, x, y):
+        label = QLabel(text, self)
+        label.setFont(QFont(self.font, 12.5))
+        label.adjustSize()
+        label.move(x, y)
+        options = QSpinBox(self)
+        options.setFont(QFont(self.font, 12.5))
+        options.setMinimum = small
+        options.setMaximum = big
+        options.adjustSize()
+        options.move(x + label.width() + 10, y)
+        return options
+
+    def video_time(self, subject, why, time):
+        self.w = VideoPlayer(subject, why, time)
+        self.w.show()
+
     def initUI(self):
         # self.image("bing chilling.png", 0,0)
-        self.image("graphic design is my passion.png", 0, 0)
+        self.image("graphic design is my passion.png", 0, 350)
         title = QLabel("ResearchHub", self)
         title.setFont(QFont("Helevetica", 30))
+        # title.setStyleSheet("color: white")
         title.adjustSize()
+
         title.move(400 - title.width() // 2, 0)
-        self.combo_box("What do you want to focus on?", [
-            "Algebra",
-            "Geometry",
-            "Algebra II",
-            "Pre-Calculus",
-            "Math Analysis",
-            "Statistics",
-            "Calculus AB",
-            "Calculus BC",
-            "Linear Algebra",
-            "Physics 1",
-            "Physics 2",
-            "Physics C",
-            "Computer Science Principles",
-            "Computer Science A",
-            "Data Structures",
-            "Algorithims",
-            "Inorganic Chemistry",
-            "Organic Chemistry",
-            "Zoology",
-            "Human Biology",
-            "Biotechnology",
-            "Biochemistry",
-            "Psychology",
-            "English",
-            "Creative Writing",
-            "Multimodal Literature",
-            "Historical Literature",
-            "Political Science",
-            "American History",
-            "European History",
-            "Russian History",
-            "Asian History",
-            "African History",
-            "International History",
-            "Spanish",
-            "French",
-            "Japanese",
-            ], 10,60)
-        self.combo_box("What are you studying for?", 
-            ["Homework", 
-            "Standardized Test (ACT, SAT)",
-            "Research",
-            "For Fun"],
-             10, 100)
-""
+        subject = self.combo_box("What do you want to focus on?", data.ret_subjects(), 10,60)
+        why = self.combo_box("What are you studying for?", data.ret_reasons(),10, 100)
+        time = self.spin_box("How long should the videos be? (in minutes)", 1, 60, 10, 140)
+
+        generate_button = QPushButton("Find videos", self)
+        generate_button.setFont(QFont(self.font, 12.5))
+        generate_button.move(400, 300)
+        generate_button.clicked.connect(self.video_time)
         # subjects
         # tests?
-
-
-    # def video(self, url, x, y):
-    #     player = QMediaPlayer()
-    #     player.setSource(QUrl("https://www.youtube.com/watch?v=QMR9KR5IMYs"))
-    #     video_widget = QVideoWidget()
-    #     player.setVideoOutput(video_widget)
-    #     video_widget.show()
-    #     video_widget.move(x,y)
-    #     player.play()
+    
 
