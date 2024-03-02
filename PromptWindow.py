@@ -13,6 +13,9 @@ class PromptWindow(QMainWindow):
     """
     def __init__(self):
         self.font = "Helevetica"
+        self.x = 500
+        self.y = 250
+
         super().__init__() # needed for QMainWindow properties
         self.initWindow() # initalizes window
         self.initUI() # initalizes ui
@@ -25,8 +28,8 @@ class PromptWindow(QMainWindow):
 
         self.setWindowTitle("Form Submission")
         # self.setGeometry(800, 800, 800, 800) # Default dimensions
-        self.setFixedWidth(800) # prevent window from being resized
-        self.setFixedHeight(400)
+        self.setFixedWidth(self.x) # prevent window from being resized
+        self.setFixedHeight(self.y)
         self.move(((screen_geometry.width() - self.width()) // 2), ((screen_geometry.height() - self.height()) // 2)) # centers application
 
     def image(self, dir, x, y):
@@ -74,15 +77,15 @@ class PromptWindow(QMainWindow):
         # title.setStyleSheet("color: white")
         title.adjustSize()
 
-        title.move(400 - title.width() // 2, 0)
+        title.move(self.x // 2 - title.width() // 2, 0)
         subject = self.combo_box("What do you want to focus on?", data.ret_subjects(), 10,60)
         why = self.combo_box("What are you studying for?", data.ret_reasons(),10, 100)
         time = self.spin_box("How long should the videos be? (in minutes)", 1, 60, 10, 140)
 
         generate_button = QPushButton("Find videos", self)
         generate_button.setFont(QFont(self.font, 12.5))
-        generate_button.move(400, 300)
-        generate_button.clicked.connect(self.video_time)
+        generate_button.move(self.x // 2 - generate_button.width() // 2, self.y - 50)
+        generate_button.clicked.connect(self.video_time(subject.currentText(), why.currentText(), time.value()))
         # subjects
         # tests?
     
