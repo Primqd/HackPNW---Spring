@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QMainWindow, QApplication, QLabel, QComboBox, QSpinBox, QPushButton
-from PySide6.QtGui import QPixmap, QFont
+from PySide6.QtGui import QPixmap, QFont, QIcon
 from VideoPlayer import VideoPlayer
 import data
 #from PySide6.QtMultimedia import QMediaPlayer
@@ -12,11 +12,13 @@ class PromptWindow(QMainWindow):
     The code is generated as a class, but functions as sequenced code due to __init__.
     """
     def __init__(self):
-        self.font = "Helevetica"
+        super().__init__() # needed for QMainWindow properties
+
+        self.font = "DejaVu Sans"
         self.x = 500
         self.y = 250
 
-        super().__init__() # needed for QMainWindow properties
+        self.setWindowIcon(QIcon("pepe.png"))
         self.initWindow() # initalizes window
         self.initUI() # initalizes ui
     
@@ -65,10 +67,6 @@ class PromptWindow(QMainWindow):
         options.move(x + label.width() + 10, y)
         return options
 
-    def video_time(self, subject, why, time):
-        self.w = VideoPlayer(subject, why, time)
-        self.w.show()
-
     def initUI(self):
         # self.image("bing chilling.png", 0,0)
         self.image("graphic design is my passion.png", 0, 350)
@@ -85,7 +83,10 @@ class PromptWindow(QMainWindow):
         generate_button = QPushButton("Find videos", self)
         generate_button.setFont(QFont(self.font, 12.5))
         generate_button.move(self.x // 2 - generate_button.width() // 2, self.y - 50)
-        generate_button.clicked.connect(self.video_time(subject.currentText(), why.currentText(), time.value()))
+        def on_button_click():
+            self.w = VideoPlayer(subject.currentText(), why.currentText(), time.value())
+            self.w.show()
+        generate_button.clicked.connect(on_button_click)
         # subjects
         # tests?
     
