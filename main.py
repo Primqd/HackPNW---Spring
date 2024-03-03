@@ -2,7 +2,7 @@ from PySide6.QtWidgets import QApplication
 from PromptWindow import PromptWindow
 import sys
 
-def main(): # Opening window code
+def main() -> None: # Opening window code
     app = QApplication(sys.argv)
     main_window = PromptWindow()
     main_window.show()
