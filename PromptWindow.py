@@ -1,10 +1,10 @@
-from PySide6.QtWidgets import QMainWindow, QApplication, QLabel, QComboBox, QSpinBox, QPushButton
-from PySide6.QtGui import QPixmap, QFont, QIcon
-from VideoPlayer import VideoPlayer
-import data
+from PySide6.QtWidgets import QMainWindow, QApplication, QLabel, QComboBox, QListWidget, QPushButton, QVBoxLayout, QWidget
+from PySide6.QtMultimedia import QMediaPlayer
+from PySide6.QtGui import QPixmap, QFont
 #from PySide6.QtMultimedia import QMediaPlayer
-#from PySide6.QtMultimediaWidgets import QVideoWidget
-#from PySide6.QtCore import Qt
+from PySide6.QtMultimediaWidgets import QVideoWidget
+from VideoPlayer import VideoPlayer
+#from PySide6.QtCore import Qt, QUrl
 
 class PromptWindow(QMainWindow):
     """
@@ -12,15 +12,9 @@ class PromptWindow(QMainWindow):
     The code is generated as a class, but functions as sequenced code due to __init__.
     """
     def __init__(self):
-        super().__init__() # needed for QMainWindow properties
-
-        self.font = "DejaVu Sans"
-        self.x = 500
-        self.y = 250
-
-        self.setWindowIcon(QIcon("pepe.png"))
+        super().__init__() # needed for QMainWindow propert ies
         self.initWindow() # initalizes window
-        self.initUI() # initalizes ui
+        self.UX() # initalizes ui
     
     def initWindow(self):
         """
@@ -30,64 +24,94 @@ class PromptWindow(QMainWindow):
 
         self.setWindowTitle("Form Submission")
         # self.setGeometry(800, 800, 800, 800) # Default dimensions
-        self.setFixedWidth(self.x) # prevent window from being resized
-        self.setFixedHeight(self.y)
+        self.setFixedWidth(800) # prevent window from being resized
+        self.setFixedHeight(400)
         self.move(((screen_geometry.width() - self.width()) // 2), ((screen_geometry.height() - self.height()) // 2)) # centers application
 
     def image(self, dir, x, y):
         label = QLabel(self)
         pixmap = QPixmap(dir)
         label.setPixmap(pixmap)
-        label.setGeometry(0, 0, pixmap.width(), pixmap.height())
-        label.move(x, y)
         label.setScaledContents(True)
+        label.setGeometry(0, 0, pixmap.width()/3, pixmap.height()/3)
+        label.move(x, y)
     
     def combo_box(self, text, items, x, y):
         label = QLabel(text, self)
-        label.setFont(QFont(self.font, 12.5))
+        label.setFont(QFont("Helvetica", 12.5))
         label.adjustSize()
         label.move(x, y)
         options = QComboBox(self)
-        options.setFont(QFont(self.font, 12.5))
+        options.setFont(QFont("Helvetica", 12))
         options.addItems(items)
         options.adjustSize()
-        options.move(x + label.width() + 10, y)
+        options.move(x + label.width() + 10, y - 10)
         return options
 
-    def spin_box(self, text, small, big, x, y):
-        label = QLabel(text, self)
-        label.setFont(QFont(self.font, 12.5))
-        label.adjustSize()
-        label.move(x, y)
-        options = QSpinBox(self)
-        options.setFont(QFont(self.font, 12.5))
-        options.setMinimum = small
-        options.setMaximum = big
-        options.adjustSize()
-        options.move(x + label.width() + 10, y)
-        return options
-
-    def initUI(self):
-        # self.image("bing chilling.png", 0,0)
-        self.image("graphic design is my passion.png", 0, 350)
-        title = QLabel("ResearchHub", self)
-        title.setFont(QFont("Helevetica", 30))
-        # title.setStyleSheet("color: white")
-        title.adjustSize()
-
-        title.move(self.x // 2 - title.width() // 2, 0)
-        subject = self.combo_box("What do you want to focus on?", data.ret_subjects(), 10,60)
-        why = self.combo_box("What are you studying for?", data.ret_reasons(),10, 100)
-        time = self.spin_box("How long should the videos be? (in minutes)", 1, 60, 10, 140)
-
-        generate_button = QPushButton("Find videos", self)
-        generate_button.setFont(QFont(self.font, 12.5))
-        generate_button.move(self.x // 2 - generate_button.width() // 2, self.y - 50)
-        def on_button_click():
-            self.w = VideoPlayer(subject.currentText(), why.currentText(), time.value())
-            self.w.show()
-        generate_button.clicked.connect(on_button_click)
-        # subjects
-        # tests?
+    def selection_panel(self,items:list, x, y):
+        rlist = QListWidget(self)
+        rlist.setSelectionMode(QListWidget.MultiSelection)
+        rlist.addItems(items)
+        rlist.setFixedHeight(270)
+        rlist.setFixedWidth(270)
+        rlist.move(x,y)
+        rlist.setStyleSheet('color: #ffa07a; font-size: 18px')
+        return rlist 
     
+    def open_window(self):
+        self.w = VideoPlayer([i.text() for i in self.intrestlist.selectedItems()] + [i.text() for i in self.goallist.selectedItems()])
+        self.w.show()
+    def UX(self):
+        self.image("knight.jpeg", 310, 100)
+        title = QLabel("Proliem", self)
+        title.setStyleSheet("color: #ffa07a;font-family: Savoye LET; font-size: 90px;")
+        title.setGeometry(300,120,300,120)
+        title.move(318,9)
+        interests = ["Algebra",
+            "Geometry",
+            "Algebra II",
+            "Pre-Calculus",
+            "Math Analysis",
+            "Statistics",
+            "Calculus AB",
+            "Calculus BC",
+            "Linear Algebra",
+            "Physics",
+            "Computer Science",
+            "Chemistry",
+            "Zoology",
+            "Human Biology",
+            "Biotechnology",
+            "Biochemistry",
+            "Psychology",
+            "English",
+            "Creative Writing",
+            "Historical Literature",
+            "Political Science",
+            "American History",
+            "History",
+            "African History",
+            "World History",
+            "Spanish",
+            "French",
+            "Japanese",
+            ]
+        self.intrestlist = self.selection_panel(interests,9,60)
+        goals = ["Homework", 
+            "Standardized Test (ACT, SAT)",
+            "Research",
+            "For Fun",
+            "AP tests"]
+        self.goallist = self.selection_panel(goals,521,60)
+        get_button = QPushButton('Proceed',self) 
+        get_button.setGeometry(180,60,180,60)
+        get_button.move(310,300)
+        get_button.setStyleSheet('background-color: #808080; color: #ffa07a')
+        get_button.clicked.connect(self.open_window)
 
+
+
+    def video(self, url, x, y):
+        player = QMediaPlayer()
+        video_widget = QVideoWidget()
+        player.setVideoOutput(self.video_widget)
