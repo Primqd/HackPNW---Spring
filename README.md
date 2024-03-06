@@ -18,4 +18,4 @@ We were able to develop our knowledge of the PySide6 library and YouTube's API. 
 Thanks to:
 
 
-![Hack PNW logo](https://hackpnw.org/)
+![Hack PNW logo](https://hackpnw.org/](https://media.discordapp.net/attachments/1103234447358304336/1203135304555307078/QRqTOTj.png?ex=65f4e811&is=65e27311&hm=93fbdbbe2df809060f96e7536675db5d8065e01d4cab57b73746f8c1ebe10c1a&=&format=webp&quality=lossless&width=1100&height=660)https://media.discordapp.net/attachments/1103234447358304336/1203135304555307078/QRqTOTj.png?ex=65f4e811&is=65e27311&hm=93fbdbbe2df809060f96e7536675db5d8065e01d4cab57b73746f8c1ebe10c1a&=&format=webp&quality=lossless&width=1100&height=660)
