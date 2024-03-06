@@ -18,4 +18,4 @@ We were able to develop our knowledge of the PySide6 library and YouTube's API. 
 Thanks to:
 
 
-[Hack PNW logo](https://hackpnw.org/)
+![Hack PNW logo](https://hackpnw.org/)
