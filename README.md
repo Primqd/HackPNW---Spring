@@ -1,3 +1,21 @@
 # Proliem
 
-An educational youtube study tool.
+# Inspiration
+There are many times where, instead of working on homework, we decided to scroll on YouTube instead. Unfortunately, these times of scrolling often lead us to feeling even worse than we did before. Proliem is our attempt to solve this problem, providing a way to scroll social media while remaining productive.
+
+# What it does
+Our desktop app takes user input about their academic interests and goals in the near future, and curates a list of videos that help them in their goals.
+
+# How we built it
+We primarily used PySide6 for the UI, a Python-based implementation of Qt, a popular GUI framework originally in C++. We also used the Youtube-Data-API-v3 on Google Cloud for procuring videos we plan to exapnd into other social medis api's.
+
+# Challenges we ran into
+Both of us were relatively inexperienced with PySide6, and it was a challenge trying to learn how to use it in such a small time frame. Since QT was written C++, there were also many translation errors causing some nonsensical behavior when writing the code. Plus, most people use the C++ QT, leading to very little external help when implementing the code in python.
+
+#What we learned
+We were able to develop our knowledge of the PySide6 library and YouTube's API. In addition, this is our second time in a Hackathon, and it was a fun experience learning how to work together to make the project come together.
+
+Thanks to:
+
+
+[Hack PNW logo](https://hackpnw.org/)
